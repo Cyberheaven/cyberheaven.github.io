@@ -22,7 +22,7 @@ Without it, Sveltia falls back to Netlify's login service, which doesn't know th
 | Login service (Worker `sveltia-cms-auth`) | Cloudflare account **cyberheavenhq@proton.me** (account id `980d3a553e327394723e423ce87b7a88`) → *Workers & Pages* → `sveltia-cms-auth`. URL: **<https://sveltia-cms-auth.cyberheavenhq.workers.dev>** | Whoever has the login of that shared Cloudflare account (one account on the project email, by choice: no separate members). Hand its password over with the project email. |
 | Its code | Not in this repo: it's upstream [sveltia/sveltia-cms-auth](https://github.com/sveltia/sveltia-cms-auth), deployed as-is (commit `5623041`, 20 Oct 2026). One file, `src/index.js`, MIT licence. | — |
 | GitHub OAuth app **CyberHeaven CMS** | <https://github.com/organizations/Cyberheaven/settings/applications> (owned by the organisation, not a person). Callback URL: `https://sveltia-cms-auth.cyberheavenhq.workers.dev/callback` | Organisation owners (currently PurpleShonen, medhansh5, timo123421). |
-| Worker settings | Cloudflare → `sveltia-cms-auth` → *Settings → Variables and Secrets*: `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` (both stored as **Secret**), `ALLOWED_DOMAINS` (set by the deploy command below). | Cloudflare account. |
+| Worker settings | Cloudflare → `sveltia-cms-auth` → *Settings → Variables and Secrets*: `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` (both must be type **Secret**: a *Variable*'s value is shown to anyone looking at the page, and Cloudflare even prints it in its "update your Wrangler configuration" hint), `ALLOWED_DOMAINS` = `cyberheaven.eu,localhost` (since 28 Oct 2026; set there, or by the deploy command below). | Cloudflare account. |
 | CMS setting | `public/admin/config.yml` → `backend:` → `base_url: https://sveltia-cms-auth.cyberheavenhq.workers.dev` | Anyone who can change the repo. |
 
 **Never commit the client secret** or paste it into issues or chats. It only lives in the GitHub OAuth app page
@@ -45,12 +45,13 @@ The code changes rarely. To update it, or to redeploy after a change to `ALLOWED
 git clone --depth 1 https://github.com/sveltia/sveltia-cms-auth.git /tmp/sveltia-cms-auth
 cd /tmp/sveltia-cms-auth
 npx wrangler login      # log in as the CyberHeaven Cloudflare account (cyberheavenhq@proton.me)
-npx wrangler deploy --var ALLOWED_DOMAINS:cyberheaven.eu,www.cyberheaven.eu,cyberheaven.github.io,localhost
+npx wrangler deploy --var ALLOWED_DOMAINS:cyberheaven.eu,localhost
 npx wrangler logout     # don't leave the shared account logged in on your machine
 ```
 
 - **Always pass `--var ALLOWED_DOMAINS:…`**: a deploy replaces the Worker's plain variables with what the command
-  gives it. The two `GITHUB_*` values are *secrets*, which survive deploys; keep them as secrets.
+  gives it. `cyberheaven.github.io` and `www.cyberheaven.eu` aren't needed: both redirect to `cyberheaven.eu`, so
+  the CMS never runs there. The two `GITHUB_*` values are *secrets*, which survive deploys; keep them as secrets.
 - Read upstream's changes before updating (it's one short file), then note the new commit in the table above.
 - Check afterwards with the test below.
 
@@ -72,7 +73,8 @@ in this order:
 
 1. Own the domain and point it at GitHub Pages: *Settings → Pages → Custom domain* ([hosting.md](hosting.md)).
 2. Redeploy the Worker with the new domain added:
-   `npx wrangler deploy --var ALLOWED_DOMAINS:cyberheaven.eu,www.cyberheaven.eu,cyberheaven.github.io,localhost`
+   `npx wrangler deploy --var ALLOWED_DOMAINS:<new domain>,cyberheaven.eu,localhost` (drop `cyberheaven.eu` once
+   it redirects to the new domain, and as soon as we no longer own it)
 3. In the OAuth app, set *Homepage URL* to the new address (the callback URL stays the Worker's).
 4. In `astro.config.mjs`, change `site` to the new address.
 
@@ -98,7 +100,10 @@ If the service is down, volunteers can still use *Sign In Using Access Token* wi
 
 ## If a token or the secret leaks
 
-- **Client secret:** in the OAuth app, generate a new secret, delete the old one, and update the Worker secret.
+- **Client secret:** in the OAuth app (*Generate a new client secret*), then in Cloudflare → `sveltia-cms-auth` →
+  *Settings → Variables and Secrets*: delete `GITHUB_CLIENT_SECRET` and add it again with type **Secret** and the new
+  value. Test sign-in, then *Delete* the old secret in the OAuth app. Nobody's sign-in is lost: tokens already given
+  out keep working. (Done on 28 Oct 2026 after it showed as a plain variable in a screenshot.)
 - **Everyone's sign-ins:** the OAuth app's *Revoke all user tokens* signs everyone out; they just sign in again.
 - **One person's token:** they revoke it at <https://github.com/settings/applications> (*Authorized OAuth Apps*).
 
