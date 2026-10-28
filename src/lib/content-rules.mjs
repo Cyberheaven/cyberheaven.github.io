@@ -1,7 +1,7 @@
 // Rules for content, shared by scripts/check-content.mjs (pull request checks), the CMS's "Before you submit" card
 // (public/admin/cms.js, served by src/pages/admin/content-rules.mjs.ts) and the CMS's "Content health" page
 // (src/pages/admin/health.astro).
-// Tested against Sveltia 0.250.0.
+// Tested against Sveltia 0.253.1.
 //
 // Why the safety rules matter: the site shows HTML written in Markdown as-is, scripts included, and the site
 // shares its address with the CMS, where everyone's sign-in is kept. So content may not contain HTML (except the

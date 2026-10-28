@@ -45,9 +45,16 @@ for (const browserName of ["chrome", "firefox"]) {
   await wait(1200);
   check("← with unsaved changes asks, OK leaves", !hashOf(page).includes("/entries/"), hashOf(page));
 
+  // Sveltia itself (since 0.253): the changes left behind are kept in the browser, and reopening the entry offers
+  // "Restore Draft". Discard, so the next checks start from the saved article
+  await goTo(page, "#/collections/articles/entries/a-beginners-guide-to-malware-analysis");
+  const restore = await page.$eval("dialog[open]", (d) => d.innerText).catch(() => "");
+  check("reopening after leaving offers Restore Draft", restore.includes("Restore Draft"), restore.replace(/\s+/g, " ").slice(0, 60));
+  await clickButton(page, "^\\s*Discard\\s*$");
+  await wait(800);
+
   // cms.js: ⋮ → Clear All asks first; Cancel keeps the fields
   acceptLeave = false;
-  await goTo(page, "#/collections/articles/entries/a-beginners-guide-to-malware-analysis");
   await page.click('[role="toolbar"][aria-label="Primary"] button[aria-label="Show Editor Options"]');
   await wait(600);
   await page.evaluate(() => [...document.querySelectorAll('[role="menuitem"]')].find((m) => m.textContent.trim() === "Clear All").click());

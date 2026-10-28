@@ -22,6 +22,9 @@ async function dead(url) {
   try {
     let response = await visit("HEAD");
     if (response.status >= 400) response = await visit("GET"); // some sites don't answer HEAD
+    if (![404, 410].includes(response.status)) return null;
+    await new Promise((done) => setTimeout(done, 10000)); // a site having a bad minute isn't a dead link: ask again
+    response = await visit("GET");
     return [404, 410].includes(response.status) ? `${response.status}` : null;
   } catch (error) {
     return error.cause?.code === "ENOTFOUND" ? "the domain doesn't exist" : null; // timeouts and refusals: skipped

@@ -91,16 +91,16 @@ Disk artifacts stick around, surviving reboots and even some cleanup attempts. T
 | $UsnJrnl | `$Extend` folder at the root of `C:`, `$J` stream | [MFTECmd](https://github.com/EricZimmerman/MFTECmd) |
 | $LogFile | Root of the `C:` drive | [MFTECmd](https://github.com/EricZimmerman/MFTECmd) |
 | Amcache | `C:\Windows\AppCompat\Programs\Amcache.hve` | [AmcacheParser](https://github.com/EricZimmerman/AmcacheParser) |
-| Shimcache | `HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\AppCompatCache` | [Registry Explorer](https://github.com/EricZimmerman/RegistryExplorer) |
-| BAM/DAM | `HKLM\SYSTEM\CurrentControlSet\Services\bam\State\UserSettings` | [Registry Explorer](https://github.com/EricZimmerman/RegistryExplorer) |
+| Shimcache | `HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\AppCompatCache` | [Registry Explorer](https://ericzimmerman.github.io/) |
+| BAM/DAM | `HKLM\SYSTEM\CurrentControlSet\Services\bam\State\UserSettings` | [Registry Explorer](https://ericzimmerman.github.io/) |
 | Jump Lists | `%APPDATA%\Microsoft\Windows\Recent\AutomaticDestinations` | [JLECmd](https://github.com/EricZimmerman/JLECmd) |
 | LNK Files | `%APPDATA%\Microsoft\Windows\Recent` | [LECmd](https://github.com/EricZimmerman/LECmd) |
-| NTUSER.DAT | `%USERPROFILE%\NTUSER.DAT` | [Registry Explorer](https://github.com/EricZimmerman/RegistryExplorer) |
+| NTUSER.DAT | `%USERPROFILE%\NTUSER.DAT` | [Registry Explorer](https://ericzimmerman.github.io/) |
 | Windows Event Logs | `C:\Windows\System32\winevt\Logs` | [Event Log Explorer](https://www.eventlogxp.com/) |
 | PowerShell Logs | `C:\Windows\System32\winevt\Logs` | [Event Log Explorer](https://www.eventlogxp.com/) |
 | Sysmon Logs | `C:\Windows\System32\winevt\Logs` | [Event Log Explorer](https://www.eventlogxp.com/) |
-| Scheduled Tasks | `C:\Windows\System32\Tasks` | [Registry Explorer](https://github.com/EricZimmerman/RegistryExplorer) |
-| ShellBags | `NTUSER.DAT / UsrClass.dat` | [ShellBags Explorer](https://github.com/EricZimmerman/ShellBagsExplorer) |
+| Scheduled Tasks | `C:\Windows\System32\Tasks` | [Registry Explorer](https://ericzimmerman.github.io/) |
+| ShellBags | `NTUSER.DAT / UsrClass.dat` | [ShellBags Explorer](https://ericzimmerman.github.io/) |
 | Zone.Identifier / ADS | NTFS Alternate Data Stream | [AlternateStreamView](https://www.nirsoft.net/utils/alternate_data_streams.html) |
 | Disk Image / File System | Disk image / mounted evidence | [Autopsy](https://www.autopsy.com/download/) |
 

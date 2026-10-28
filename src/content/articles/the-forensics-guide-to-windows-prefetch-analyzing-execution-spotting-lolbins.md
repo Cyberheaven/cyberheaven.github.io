@@ -43,7 +43,7 @@ _Note: If two prefetch files with different hashes originate from the same execu
 
 ## Analyzing Prefetch Files
 
-The tool we will use is [Winprefetchview](https://www.nirsoft.net/utils/winprefetchview-x64.zip) by NirSoft. The UI is quite self-explanatory. It parses all entries in the default prefetch folder. In case we need to analyze collected prefetch files as artifacts not on the live machine, we can use [PECmd](https://download.ericzimmermanstools.com/net9/PECmd.zip) by Eric Zimmerman. Both of these are demonstrated below:
+The tool we will use is [Winprefetchview](https://www.nirsoft.net/utils/winprefetchview-x64.zip) by NirSoft. The UI is quite self-explanatory. It parses all entries in the default prefetch folder. In case we need to analyze collected prefetch files as artifacts not on the live machine, we can use [PECmd](https://download.ericzimmermanstools.com/net/PECmd.zip) by Eric Zimmerman. Both of these are demonstrated below:
 
 [Winprefetchview & PECmd](https://www.youtube.com/watch?v=o305_T7KMDc)
 
@@ -74,7 +74,7 @@ The simplest way to check this is to run `sc query sysmain`
 ![](/media/2026/10/image-2.png)
 
 2\. Deleting `.pf` files
-This can be easily detected through USN Journal records. More about USN Journal here: <https://linktojournalarticle.com>
+This can be easily detected through USN Journal records. More about the USN Journal: [Change journals (Microsoft Learn)](https://learn.microsoft.com/en-us/windows/win32/fileio/change-journals)
 
 3\. `HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters` can be set to any number not `3` which will disable prefetch creation entirely. We can check for this using regedit. More about the registry here:
 [Click me!](/articles/introduction-to-digital-forensics-and-incident-response)

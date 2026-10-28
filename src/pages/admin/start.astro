@@ -43,9 +43,9 @@ const places = [
         <ul>
           <li><strong>Saving keeps your work as a draft.</strong> Nothing on the live site changes yet, so save as often as you like.</li>
           <li><strong>When it’s ready, send it for review:</strong> after each save the CMS asks whether to send it for review. Pick <em>Send for Review</em> when it’s ready, or <em>Later</em> to keep it a draft (you can also change it any time with the <em>Status</em> menu next to Save). An editor or maintainer gets a message and looks at it.</li>
-          <li><strong>Publishing puts it live.</strong> Once a change is approved, <em>Publish</em> appears when its status is <em>Ready</em>; the site shows it a few minutes later. If Publish says it couldn’t publish, the change is still waiting for an approval.</li>
+          <li><strong>Publishing puts it live.</strong> An editor or maintainer approves a change by setting its status to <em>Ready</em>; then anyone allowed to publish sees <em>Publish</em>, and the site shows the change a few minutes after it’s pressed. If Publish says it couldn’t publish, the change is still waiting for an approval, or a check found a problem.</li>
           <li>The <em>Workflow</em> page in the top bar shows everything that’s being worked on, by status.</li>
-          <li>The Save button gets a coloured ring while you have changes that aren’t saved yet. If you try to leave with unsaved changes, the CMS asks first.</li>
+          <li>The Save button gets a coloured ring while you have changes that aren’t saved yet. If you try to leave with unsaved changes, the CMS asks first, and keeps a copy in your browser either way.</li>
           <li>No write access yet? You can still edit: the CMS keeps your changes in your own copy of the site (a fork) and sends them for review.</li>
         </ul>
 
@@ -90,7 +90,7 @@ const places = [
         <h2>When something goes wrong</h2>
         <ul>
           <li><strong>“Entry Changed by Someone Else”:</strong> someone saved this entry while you had it open. <em>Save Anyway</em> replaces their changes with yours, so don’t pick it unless you’ve checked with them. Copy your changes somewhere, reload, and add them again.</li>
-          <li><strong>“Restore Draft”:</strong> the CMS kept the changes you hadn’t saved when the tab closed. Pick it to get them back.</li>
+          <li><strong>“Restore Draft”:</strong> the CMS kept changes you hadn’t saved (the tab closed, or you left without saving). Pick <em>Restore</em> to get them back, or <em>Discard</em> to start from the saved version.</li>
           <li><strong>“Couldn’t publish the entry”:</strong> the change still needs an approval, or the checks found a problem. The checks run on GitHub for every change; the <em>Before you submit</em> card catches most of what they look for.</li>
           <li><strong>Deleted something by mistake?</strong> Ask a maintainer on Discord: every version is kept on GitHub, so it can be brought back.</li>
           <li><strong>A team member can’t be deleted</strong> while they have articles. Pick another author for those first.</li>

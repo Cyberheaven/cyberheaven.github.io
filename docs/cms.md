@@ -121,8 +121,9 @@ Things that aren't obvious:
 - **Roles field** for team members: unusable (`inert`, dimmed) for everyone but maintainers. The rule itself is
   enforced by `scripts/check-roles.mjs` on every pull request.
 - **Start here** page (`CMS.registerCustomPage`). A volunteer's first visit in each browser opens it once.
-- **Unsaved changes:** the ← button asks before throwing them away (Sveltia wouldn't); closing the tab asks too.
-  The browser's own Back button isn't covered.
+- **Unsaved changes:** the ← button asks before leaving with them (Sveltia wouldn't); closing the tab asks too.
+  The browser's own Back button isn't covered. Since 0.253 Sveltia keeps them in the browser anyway and offers
+  "Restore Draft" when the entry is opened again (`check.mjs` tests it), so the question says so.
 - **Clear All** in the editor's ⋮ menu asks before emptying every field (Sveltia wouldn't).
 - **New entries:** Sveltia enables Save on a new entry before anything is typed. Until the first click or edit in
   a field, `body[data-fresh]` is set: no "unsaved" ring on Save, and ← leaves without asking.
@@ -136,7 +137,7 @@ Things that aren't obvious:
   line above Settings). It's only tidying: a direct link still opens them, and GitHub decides what goes live.
   Writers, editors and contributors all count as volunteers (telling them apart needs the `read:org` sign-in scope).
   If GitHub can't be asked, or in the demo, everything shows. `check.mjs` fakes GitHub's answer to test both levels.
-- **Team members with articles can't be deleted.** That's Sveltia itself (since 0.250.0 at least): its delete
+- **Team members with articles can't be deleted.** That's Sveltia itself (0.250.0 and later): its delete
   dialog lists the articles that name them and switches Delete off. `check.mjs` tests it, so an update that drops
   it fails there. (The site doesn't build without every article's author.)
 - **Logo name:** screen readers hear "CyberHeaven: visit the live site", matching what the logo shows.
@@ -217,6 +218,10 @@ decide to skip that version; the next release opens a new one). *Actions → Wee
    update (take those first, on the old version; the sign-in background is animated, so it always differs).
    Variable names have stayed the same so far, but Sveltia doesn't promise that.
 3. If something broke, find the new markup with your browser's inspector, and Sveltia's rule with `find-css.mjs`.
+
+Last update: 28 Oct 2026, 0.250.0 → 0.253.1 (two security fixes in the review workflow). All 44 screenshots were
+pixel-identical before and after. Behaviour changes: marking an entry *Ready* approves its pull request
+([access-levels.md](access-levels.md#day-to-day)), and changes left behind are kept for "Restore Draft".
 
 ## Bringing back something deleted
 

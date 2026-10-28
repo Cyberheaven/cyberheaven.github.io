@@ -39,8 +39,9 @@ tidying: a direct link still opens those sections, and the rules above still dec
   an entry creates a branch `cms/<collection>/<entry>` and a draft pull request on GitHub. Nothing on `main` (the
   live site) changes yet.
 - **Statuses.** An entry moves Draft → In Review → Ready with the *Status* menu in the editor's top bar. These are
-  only labels on the pull request (`sveltia-cms/draft`, `…/pending_review`, `…/pending_publish`), not approvals.
-  The *Workflow* page in the top bar shows every entry by status.
+  labels on the pull request (`sveltia-cms/draft`, `…/pending_review`, `…/pending_publish`). Setting *Ready* also
+  approves the pull request as whoever set it (Sveltia 0.251+), which counts only if they're a code owner of the
+  changed files (see *Approving* below). The *Workflow* page in the top bar shows every entry by status.
 - **Publish** appears once an entry is Ready. It merges the pull request into `main`, and the site rebuilds.
 - **GitHub decides whether the merge is allowed.** A ruleset on `main` (*Review before publishing*,
   [`.github/rulesets/review-before-publishing.json`](../.github/rulesets/review-before-publishing.json)) requires a
@@ -60,10 +61,14 @@ tidying: a direct link still opens those sections, and the rules above still dec
 pick it when the draft is ready, or *Later*. (*Status → In Review* in the editor's top bar does the same.)
 Contributors: that's the moment your change is sent.
 
-**Approving (editors and maintainers).** Open the pull request on GitHub (from the notification, or the repo's
-*Pull requests* tab). Look at *Files changed*, then *Review changes → Approve*. After that, the writer or you can
-press *Publish* in the CMS, or *Merge* on GitHub. GitHub never lets you approve your own pull request: an editor's
-own article needs another editor or a maintainer.
+**Approving (editors and maintainers).** In the CMS: open the entry from the *Workflow* page, read it, and set its
+status to *Ready*. Since Sveltia 0.251 that also approves its pull request on GitHub as you (setting it back to
+*In Review* or *Draft* withdraws the approval), so *Publish* then works. Or on GitHub: the pull request (from the
+notification, or the repo's *Pull requests* tab) → *Files changed* → *Review changes → Approve*. After that, the
+writer or you can press *Publish* in the CMS, or *Merge* on GitHub. GitHub never lets you approve your own pull
+request: an editor's own article needs another editor or a maintainer. A writer setting *Ready* counts as an
+approval only where writers are code owners, which is nowhere ([`CODEOWNERS`](../.github/CODEOWNERS)), so it
+stays a label for them. (Not yet tried with real writer and editor accounts.)
 
 **Contributors' changes** come from a fork, so the CMS can't publish them: approve and merge them on GitHub. For
 someone's first contribution, also press *Approve and run* on the pull request, or its checks never start.

@@ -479,7 +479,7 @@ window.addEventListener("hashchange", () => setLevel().catch(() => {})); // sign
 // ponytail: the browser's Back button can't be stopped this way; add a hashchange guard if volunteers hit it.
 const unsaved = () => !document.body.dataset.fresh && document.querySelector('[role="toolbar"][aria-label="Primary"] button[data-label="Save"][aria-disabled="false"]');
 document.addEventListener("click", (event) => {
-  if (event.target.closest?.('button[aria-label="Cancel Editing"]') && unsaved() && !confirm("Leave without saving? Your changes will be lost.")) {
+  if (event.target.closest?.('button[aria-label="Cancel Editing"]') && unsaved() && !confirm("Leave without saving? The next time you open it in this browser, the CMS offers to restore your changes.")) {
     event.preventDefault();
     event.stopImmediatePropagation();
   }
