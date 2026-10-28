@@ -32,7 +32,7 @@ node scripts/check-content.mjs && node scripts/check-data.mjs && node scripts/ch
 ```
 
 **Why content may not contain HTML.** The site shows HTML written in Markdown as-is, scripts included. The site
-and the CMS share one address (`cyberheaven.github.io`), and the CMS keeps everyone's sign-in in the browser there,
+and the CMS share one address (`cyberheaven.eu`), and the CMS keeps everyone's sign-in in the browser there,
 so a script slipped into an article could act as any maintainer who opens it. Reviewers can miss a line hidden in
 a long article; the check doesn't. The interactive widget line (`<div data-widget="…"></div>`) is the one
 exception. Code shown in an article belongs in `backticks` or a code block, where anything goes.

@@ -15,7 +15,7 @@ const example = /^https?:\/\/([^/]*\.)?(example\.(com|org|net)|[^/]*\.(example|t
 const links = new Map(); // link → the first file that has it
 for (const file of files)
   for (const [url] of readFileSync(file, "utf8").matchAll(/https?:\/\/[^\s"'`<>)\]\\]+/g))
-    if (!/^https?:\/\/(cyberheaven\.github\.io|localhost)/.test(url) && !example.test(url) && !links.has(url)) links.set(url, file);
+    if (!/^https?:\/\/((www\.)?cyberheaven\.eu|cyberheaven\.github\.io|localhost)/.test(url) && !example.test(url) && !links.has(url)) links.set(url, file);
 
 async function dead(url) {
   const visit = (method) => fetch(url, { method, redirect: "follow", signal: AbortSignal.timeout(20000), headers: { "User-Agent": "Mozilla/5.0 (CyberHeaven link check)" } });

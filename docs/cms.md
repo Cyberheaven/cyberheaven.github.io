@@ -77,7 +77,8 @@ Things that aren't obvious:
   and `src/pages/team/[person].astro`, styled by the site's real CSS. If you change those pages, change `cms.js` too.
 - **Before you submit** card at the top of the article preview, updated as you type. It lists: no excerpt or one
   over 160 characters, a cover or body image without alt text, a heading 1 in the body or a skipped heading level,
-  the old `cyberheaven.eu` site, links to `/articles/…` or `/team/…` pages that don't exist (hidden articles count
+  old `@cyberheaven.eu` email addresses, links to the site written with its address (`https://cyberheaven.eu/…`
+  instead of `/…`), links to `/articles/…` or `/team/…` pages that don't exist (hidden articles count
   as missing), the pull request checks' Markdown rules (`src/lib/content-rules.mjs`, shared with
   `check-content.mjs`, so those would also fail the checks), and "Hide from the site" being on. Only what's in the
   preview is checked: it doesn't stop a save.

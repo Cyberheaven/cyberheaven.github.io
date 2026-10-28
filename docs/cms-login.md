@@ -1,6 +1,6 @@
 # CMS sign-in ("Sign In with GitHub")
 
-How volunteers sign in to the CMS at <https://cyberheaven.github.io/admin/>, what keeps it working, and how to fix
+How volunteers sign in to the CMS at <https://cyberheaven.eu/admin/>, what keeps it working, and how to fix
 it.
 
 > **Status:** working since 21 Oct 2026 (tested by signing in on the live site). Who may do what once signed in: [access-levels.md](access-levels.md). The CMS itself: [cms.md](cms.md).
@@ -45,7 +45,7 @@ The code changes rarely. To update it, or to redeploy after a change to `ALLOWED
 git clone --depth 1 https://github.com/sveltia/sveltia-cms-auth.git /tmp/sveltia-cms-auth
 cd /tmp/sveltia-cms-auth
 npx wrangler login      # log in as the CyberHeaven Cloudflare account (cyberheavenhq@proton.me)
-npx wrangler deploy --var ALLOWED_DOMAINS:cyberheaven.github.io,localhost
+npx wrangler deploy --var ALLOWED_DOMAINS:cyberheaven.eu,www.cyberheaven.eu,cyberheaven.github.io,localhost
 npx wrangler logout     # don't leave the shared account logged in on your machine
 ```
 
@@ -59,14 +59,16 @@ npx wrangler logout     # don't leave the shared account logged in on your machi
 ```sh
 W=https://sveltia-cms-auth.cyberheavenhq.workers.dev
 curl -s "$W/auth?provider=github&site_id=evil.example" | grep -o UNSUPPORTED_DOMAIN       # another site: refused
-curl -s -o /dev/null -w "%{http_code}\n" "$W/auth?provider=github&site_id=cyberheaven.github.io"   # ours: 302 (to GitHub)
+curl -s -o /dev/null -w "%{http_code}\n" "$W/auth?provider=github&site_id=cyberheaven.eu"   # ours: 302 (to GitHub)
 ```
 
-Then sign in on <https://cyberheaven.github.io/admin/> in a private window, in Firefox and Chrome.
+Then sign in on <https://cyberheaven.eu/admin/> in a private window, in Firefox and Chrome. The same test runs every
+Monday and opens an issue if it fails ([hosting.md](hosting.md#weekly-look-outs)).
 
 ## Changing the domain
 
-The site may move to `cyberheaven.eu` (or another domain) one day. Do all of these, in this order:
+The site moved from `cyberheaven.github.io` to `cyberheaven.eu` on 28 Oct 2026. For a future move, do all of these,
+in this order:
 
 1. Own the domain and point it at GitHub Pages: *Settings → Pages → Custom domain* ([hosting.md](hosting.md)).
 2. Redeploy the Worker with the new domain added:
@@ -88,7 +90,7 @@ GitHub tokens, so remove a domain from `ALLOWED_DOMAINS` as soon as we stop owni
 | Volunteers get signed out every few hours | *Expire user access tokens* is on in the OAuth app. | Turn it off. |
 | "Potential CSRF attack detected" | The popup took over 10 minutes, or the browser blocked the Worker's cookie. | Try again; allow cookies for `workers.dev`. |
 | GitHub error **"bad_verification_code"** or sign-in suddenly fails for everyone | The client secret was regenerated or deleted. | Generate a new secret in the OAuth app and put it in the Worker's `GITHUB_CLIENT_SECRET`. |
-| Nothing opens | The browser blocked the popup. | Allow popups for `cyberheaven.github.io`. |
+| Nothing opens | The browser blocked the popup. | Allow popups for `cyberheaven.eu`. |
 | Signed in, but Publish fails ("Couldn't publish the entry") | Not a sign-in problem: the change needs an approval. | [access-levels.md](access-levels.md). |
 
 If the service is down, volunteers can still use *Sign In Using Access Token* with a classic personal access token
@@ -106,7 +108,7 @@ If the Worker or the OAuth app is lost:
 
 1. Deploy the Worker (commands above) to the CyberHeaven Cloudflare account; note its URL.
 2. Create the OAuth app at <https://github.com/organizations/Cyberheaven/settings/applications/new>:
-   - *Application name* `CyberHeaven CMS`; *Homepage URL* `https://cyberheaven.github.io`; *Application
+   - *Application name* `CyberHeaven CMS`; *Homepage URL* `https://cyberheaven.eu`; *Application
      description* `Sign in to write and edit the CyberHeaven site.` (volunteers see it on GitHub's Authorize page)
    - *Redirect URI* (older GitHub pages call it *Authorization callback URL*): `<worker URL>/callback`, only that one
    - *Allow wildcard matching*: **off** (it would let tokens go to addresses we don't control)

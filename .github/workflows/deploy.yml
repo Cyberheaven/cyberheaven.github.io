@@ -1,4 +1,4 @@
-# Builds the site and publishes it on GitHub Pages (https://cyberheaven.github.io) after every change to main,
+# Builds the site and publishes it on GitHub Pages (https://cyberheaven.eu) after every change to main,
 # including changes published from the CMS. See docs/hosting.md.
 name: Deploy to GitHub Pages
 

@@ -238,14 +238,14 @@ function SearchCard({ title, excerpt, slug }) {
   return h("aside", { className: "shell cms-search", "aria-label": "In Google and when shared" },
     h("p", { className: "caption" }, "In Google · ", count("title", pageTitle.length, 60), " · ", count("excerpt", excerpt.length, 160)),
     h("div", { className: "cms-google" },
-      h("p", { className: "cms-url" }, `cyberheaven.github.io › articles › ${slug || "…"}`),
+      h("p", { className: "cms-url" }, `cyberheaven.eu › articles › ${slug || "…"}`),
       h("p", { className: "cms-title" }, cut(pageTitle, 60)),
       h("p", null, cut(excerpt, 160) || "No excerpt: Google picks some text from the page.")),
     h("p", { className: "caption" }, "When the link is shared"),
     h("div", { className: "cms-share" },
       h("img", { src: "/assets/og.jpg", alt: "" }),
       h("div", null,
-        h("p", { className: "cms-url" }, "cyberheaven.github.io"),
+        h("p", { className: "cms-url" }, "cyberheaven.eu"),
         h("p", { className: "cms-title" }, pageTitle),
         h("p", null, cut(excerpt, 110)))));
 }

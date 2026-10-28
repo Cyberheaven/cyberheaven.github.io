@@ -21,7 +21,7 @@ Free for everyone, run by the people who use it. No pricing, paid courses or pai
 
 ## Operating Context
 
-- Static Astro site; content is Markdown in `src/content/` edited through Sveltia CMS (Git-based, GitHub backend `Cyberheaven/cyberheaven.github.io`, hosted on GitHub Pages at https://cyberheaven.github.io).
+- Static Astro site; content is Markdown in `src/content/` edited through Sveltia CMS (Git-based, GitHub backend `Cyberheaven/cyberheaven.github.io`, hosted on GitHub Pages at https://cyberheaven.eu).
 - Community lives on Discord (discord.gg/QH8mRSCdW9); contact email cyberheavenhq@proton.me.
 
 ## Capabilities and Constraints

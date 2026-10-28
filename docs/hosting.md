@@ -1,8 +1,8 @@
 # Hosting
 
-The site is a static Astro build served free by **GitHub Pages** at **<https://cyberheaven.github.io>**, from the
-repo `Cyberheaven/cyberheaven.github.io`. GitHub serves an organisation's site at that address only from a repo with
-exactly that name, which is why the repo is named after the site.
+The site is a static Astro build served free by **GitHub Pages** at **<https://cyberheaven.eu>** (since 28 Oct 2026;
+before that at `cyberheaven.github.io`, which now redirects there), from the repo `Cyberheaven/cyberheaven.github.io`.
+GitHub serves an organisation's own site only from a repo with exactly that name, which is why the repo has it.
 
 ## How a change gets online
 
@@ -19,13 +19,24 @@ To go back to an older version: revert the bad commit on `main` (or re-run an ol
 ## Settings
 
 - *Settings → Pages*: **Source: GitHub Actions**. (If it says "Deploy from a branch", GitHub publishes the raw repo
-  files instead of the built site: switch it back.) HTTPS is enforced.
-- `astro.config.mjs` → `site: "https://cyberheaven.github.io"`. It's used for canonical links, social previews,
+  files instead of the built site: switch it back.) **Custom domain: `cyberheaven.eu`**, with *Enforce HTTPS* on
+  (GitHub offers it once its certificate for the domain is issued). The `CNAME` file at the repo root is what
+  GitHub's "add domain" button commits; with an Actions deploy GitHub ignores it, and the setting is what counts.
+- DNS for `cyberheaven.eu` (at the domain's registrar), as GitHub asks: `A` records for `185.199.108.153`,
+  `185.199.109.153`, `185.199.110.153`, `185.199.111.153`; `AAAA` records for `2606:50c0:8000::153`,
+  `2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153`; `www` as a `CNAME` to
+  `cyberheaven.github.io` (GitHub then sends `www.cyberheaven.eu` to `cyberheaven.eu`). A wrong record can stop
+  GitHub from issuing the HTTPS certificate: compare with `dig +short cyberheaven.eu AAAA`.
+- `astro.config.mjs` → `site: "https://cyberheaven.eu"`. It's used for canonical links, social previews,
   `robots.txt` and the sitemap. Change it if the address changes.
+- The old WordPress site was on the same domain: `redirects` in `astro.config.mjs` send its addresses (each
+  article's `/<slug>/`, `/privacy-policy/`, `/contact/`, `/courses/`…) to the same content here, so old links and
+  search results keep working.
 - Pages serves `dist/404.html` for unknown addresses, and the redirects in `astro.config.mjs` (`/privacy` →
   `/legal#privacy`, …) are built as small HTML pages, since Pages has no server-side redirects.
 - **No other repo in the Cyberheaven organisation may turn on GitHub Pages without its own custom domain.** Every
-  organisation Pages site without one is served at `cyberheaven.github.io/<repo>/`, the same web address as the CMS.
+  organisation Pages site without one is served under the organisation's domain, `cyberheaven.eu/<repo>/`: the same
+  web address as the CMS.
   The CMS keeps each signed-in person's GitHub token in the browser's storage for that address, so a script on any
   such page could read it. (CyberBot's page was there until 21 Oct 2026; it was taken down for this reason.) Check:
   `gh api orgs/Cyberheaven/repos --jq '.[]|select(.has_pages)|.name'` lists only `cyberheaven.github.io`.
@@ -51,17 +62,19 @@ anything: each opens an issue when it finds something, or updates its issue if o
 | Dead links | *Dead links in the content* | Every link to another site in articles, pages, people, resources, glossary and the career quiz ([`scripts/check-external-links.mjs`](../scripts/check-external-links.mjs)). Only pages that are gone (404, 410, or a domain that doesn't exist) count; sites that refuse automated visits are skipped. The labs' made-up addresses and example domains are left out. |
 | Sign-in service | *Sign-in service isn't working* | The two tests from [cms-login.md](cms-login.md): the login service refuses other sites and sends ours to GitHub. The address is `base_url` in `config.yml`. |
 
-## A custom domain later
+## Changing the domain
 
-The old `cyberheaven.eu` domain was dropped, but may be used again. To move the site to a domain (that or another):
+To move the site to another domain (or back to `cyberheaven.github.io`):
 
 1. Own the domain. Add it under *Settings → Pages → Custom domain*; GitHub lists the DNS records to create there.
-2. Change `site` in `astro.config.mjs`.
+2. Change `site` in `astro.config.mjs`, and the address shown in the CMS's Google card (`SearchCard` in
+   `public/admin/cms.js`) and the sign-in test in `.github/workflows/weekly.yml`.
 3. Let the CMS sign-in work on it: add it to the login service's `ALLOWED_DOMAINS` and update the OAuth app's
    homepage ([cms-login.md](cms-login.md#changing-the-domain)).
+4. Once GitHub has issued the certificate, turn on *Enforce HTTPS*.
 
-Nothing else in the site depends on the address. Old WordPress links (`cyberheaven.eu/<post>/`) only work again if
-redirects for them are added (`redirects` in `astro.config.mjs`).
+Content links to the site's own pages are written as `/articles/…` (the "Before you submit" card asks for that), so
+they don't depend on the address. People signed in to the CMS on the old address sign in again on the new one.
 
 ## Signing in to the CMS on the live site
 

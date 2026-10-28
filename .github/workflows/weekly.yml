@@ -56,7 +56,7 @@ jobs:
         run: |
           W=$(grep -oP '^\s+base_url:\s*\K\S+' public/admin/config.yml)
           refused=$(curl -s -m 30 "$W/auth?provider=github&site_id=evil.example" | grep -c UNSUPPORTED_DOMAIN)
-          ours=$(curl -s -m 30 -o /dev/null -w "%{http_code}" "$W/auth?provider=github&site_id=cyberheaven.github.io")
+          ours=$(curl -s -m 30 -o /dev/null -w "%{http_code}" "$W/auth?provider=github&site_id=cyberheaven.eu")
           echo "$W: other site refused: $refused, ours: $ours"
           [ "$refused" = 1 ] && [ "$ours" = 302 ] && exit 0
           sh .github/issue.sh "Sign-in service" "Sign-in service isn't working" "The weekly test of $W failed (another site refused: $refused, expected 1; ours answered $ours, expected 302).

@@ -1,9 +1,10 @@
 // Run after `npm run build`: node scripts/check-links.mjs — every link and image on the built site that points to
-// the site itself (/articles/…, /media/…, https://cyberheaven.github.io/…) must lead to a page or file that exists.
+// the site itself (/articles/…, /media/…, https://cyberheaven.eu/…) must lead to a page or file that exists.
 // Catches links to renamed or deleted articles, people and images. Links to other sites are not checked.
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 
-const site = "https://cyberheaven.github.io";
+// The site's address, and its old one (cyberheaven.github.io now redirects here)
+const site = /^https?:\/\/(www\.)?(cyberheaven\.eu|cyberheaven\.github\.io)(?=\/|$)/;
 let problems = 0;
 for (const file of readdirSync("dist", { recursive: true }).filter((f) => f.endsWith(".html"))) {
   const html = readFileSync(`dist/${file}`, "utf8");

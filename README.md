@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://cyberheaven.github.io"><b>cyberheaven.github.io</b></a> ·
+  <a href="https://cyberheaven.eu"><b>cyberheaven.eu</b></a> ·
   <a href="https://discord.gg/QH8mRSCdW9">Discord</a> ·
   <a href="https://twitter.com/cyberheaven0x">X (Twitter)</a> ·
   <a href="https://www.linkedin.com/company/cyberheaven">LinkedIn</a> ·

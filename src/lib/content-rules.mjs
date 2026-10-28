@@ -68,7 +68,7 @@ export function articleProblems(article, live) {
       found.push({ text: `The tag “${tag}” looks like “${close}”: if they mean the same, use one, so their articles are listed together.` });
   }
   if (body.includes(outlineMark)) found.push({ text: `The starting outline’s ${outlineMark} notes are still there: replace them with your text.` });
-  if (/cyberheaven\.eu/i.test(`${article.title} ${excerpt}`)) found.push({ text: "The title or excerpt mentions the old cyberheaven.eu site." });
+  if (oldEmail.test(`${article.title} ${excerpt}`)) found.push({ text: "The title or excerpt has an old @cyberheaven.eu email address: use cyberheavenhq@proton.me." });
   for (const { line, message } of bodyProblems(body)) found.push({ text: message[0].toUpperCase() + message.slice(1), quote: body.split("\n")[line - 1] });
   let fence = false;
   let level = 1; // the title is the page's heading 1
@@ -80,12 +80,16 @@ export function articleProblems(article, live) {
     else if (heading > level + 1) found.push({ text: `Heading ${heading} right after heading ${level}: don't skip a level.`, quote: line });
     if (heading) level = heading;
     if (/!\[\s*\]\(/.test(line)) found.push({ text: "An image without alt text: describe it between the [ ].", quote: line });
-    if (/cyberheaven\.eu/i.test(line)) found.push({ text: "Link or email on the old cyberheaven.eu site: link to cyberheaven.github.io, email cyberheavenhq@proton.me.", quote: line });
-    for (const [, kind, id] of line.matchAll(/\]\((?:https?:\/\/cyberheaven\.github\.io)?\/(articles|team)\/([\w-]+)/g))
+    if (oldEmail.test(line)) found.push({ text: "An old @cyberheaven.eu email address: use cyberheavenhq@proton.me.", quote: line });
+    if (ownSite.test(line)) found.push({ text: "A link to our own site with its address: write it as /articles/…, so it works on any address.", quote: line });
+    for (const [, kind, id] of line.matchAll(/\]\((?:https?:\/\/[\w.]*cyberheaven\.(?:eu|github\.io))?\/(articles|team)\/([\w-]+)/g))
       if (live && !live[kind].includes(id)) found.push({ text: `Link to ${kind === "team" ? "a team member" : "an article"} that isn't on the site: /${kind}/${id}`, quote: line });
   }
   return found;
 }
+
+const oldEmail = /[\w.+-]+@cyberheaven\.eu\b/i; // the project's address is cyberheavenhq@proton.me
+const ownSite = /\]\(https?:\/\/(www\.)?cyberheaven\.(eu|github\.io)\b/i;
 
 // A new article's body starts with an outline (public/admin/config.yml); its notes start with this mark
 export const outlineMark = "✏️";
