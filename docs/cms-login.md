@@ -103,7 +103,8 @@ If the service is down, volunteers can still use *Sign In Using Access Token* wi
 - **Client secret:** in the OAuth app (*Generate a new client secret*), then in Cloudflare → `sveltia-cms-auth` →
   *Settings → Variables and Secrets*: delete `GITHUB_CLIENT_SECRET` and add it again with type **Secret** and the new
   value. Test sign-in, then *Delete* the old secret in the OAuth app. Nobody's sign-in is lost: tokens already given
-  out keep working. (Needed on 28 Oct 2026: it had been stored as a plain variable and showed in a screenshot.)
+  out keep working. (Done on 28 Oct 2026, after it had been stored as a plain variable and showed in a screenshot;
+  both `GITHUB_*` values are Secrets since.)
 - **Everyone's sign-ins:** the OAuth app's *Revoke all user tokens* signs everyone out; they just sign in again.
 - **One person's token:** they revoke it at <https://github.com/settings/applications> (*Authorized OAuth Apps*).
 
