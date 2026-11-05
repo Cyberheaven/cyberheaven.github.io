@@ -1,5 +1,5 @@
 ---
-name: Timo wolffenbuttel
+name: Timo Wolffenbuttel
 headline: ''
 pronouns: Him
 avatar: ''
