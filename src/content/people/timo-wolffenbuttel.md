@@ -5,6 +5,7 @@ pronouns: Him
 avatar: ''
 roles:
   - Founder
+  - Maintainer
 location: Netherlands
 joined: ''
 links: []
